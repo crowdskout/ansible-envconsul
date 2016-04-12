@@ -10,7 +10,7 @@
     - envconsul
 
 - name: Check envconsul version
-  shell: "envconsul --version >> tmp.ver 2>&1 && cat tmp.ver  | grep {{ envconsul_ver }}"
+  shell: "{{ envconsul_bin_path }}/{{ envconsul_bin_name }} --version 2>&1 | grep {{ envconsul_ver }}"
   failed_when: false
   changed_when: false
   register: envconsul_ver_matches
@@ -19,7 +19,7 @@
 
 - name: Install envconsul
   shell: "{{ envconsul_install_script }}"
-  when: envconsul_ver_matches|failed
+  when: envconsul_ver_matches.rc != 0
   tags:
     - envconsul
 

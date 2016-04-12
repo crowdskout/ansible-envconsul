@@ -5,6 +5,6 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -qq python-apt python-pycurl
 install:
-  - pip install ansible
+  - script/bootstrap
 script:
-  - ansible-playbook -i inventory role.yml -e envconsul_bin_path=/home/travis/
+  - script/test

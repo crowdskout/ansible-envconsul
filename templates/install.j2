@@ -3,11 +3,11 @@
 # Install envconsul
 #
 
-pushd {{envconsul_dl_dir}} > /dev/null
+pushd {{ envconsul_dl_dir }} > /dev/null
 
-wget {{envconsul_url}}
-unzip {{envconsul_zip}}
-chmod 0755 {{envconsul_bin_name}}
-mv -f {{envconsul_bin_name}} {{envconsul_bin_path}}
+wget {{ envconsul_url }}
+unzip {{ envconsul_zip }}
+chmod 0755 {{ envconsul_bin_name }}
+mv -f {{ envconsul_bin_name }} {{ envconsul_bin_path }}
 
 popd

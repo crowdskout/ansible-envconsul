@@ -2,24 +2,37 @@
 # tasks file for envconsul
 
 - name: Write install script
-  template: src=install.j2 dest={{envconsul_install_script}} mode=0755
+  template:
+    src: install.j2
+    dest: "{{ envconsul_install_script }}"
+    mode: 0755
   tags:
     - envconsul
 
 - name: Check envconsul version
-  shell: envconsul --version >> tmp.ver 2>&1 && cat tmp.ver  | grep {{envconsul_ver}}
-  ignore_errors: true
+  shell: "envconsul --version >> tmp.ver 2>&1 && cat tmp.ver  | grep {{ envconsul_ver }}"
+  failed_when: false
+  changed_when: false
   register: envconsul_ver_matches
   tags:
     - envconsul
 
 - name: Install envconsul
-  shell: "{{envconsul_install_script}}"
+  shell: "{{ envconsul_install_script }}"
   when: envconsul_ver_matches|failed
   tags:
     - envconsul
 
 - name: Verify binary
-  shell: "stat {{envconsul_bin_path}}/{{envconsul_bin_name}}"
+  stat:
+    path: "stat {{ envconsul_bin_path }}/{{ envconsul_bin_name }}"
+  register: envconsul_verify_binary
+  tags:
+    - envconsul
+
+- name: Fail if binary is not present
+  fail:
+    msg: envconsul binary is not present
+  when: not envconsul_verify_binary.stat.exists
   tags:
     - envconsul

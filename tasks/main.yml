@@ -25,7 +25,7 @@
 
 - name: Verify binary
   stat:
-    path: "stat {{ envconsul_bin_path }}/{{ envconsul_bin_name }}"
+    path: "{{ envconsul_bin_path }}/{{ envconsul_bin_name }}"
   register: envconsul_verify_binary
   tags:
     - envconsul
